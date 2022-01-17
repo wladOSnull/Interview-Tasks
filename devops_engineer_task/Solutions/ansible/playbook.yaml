@@ -1,0 +1,51 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+# adding repo & downloading
+  - name: adding repo for docker
+    get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docker-ce.repo
+
+  - name: downloading docker-compose
+    shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
+#  creating link on docker-compose if it does not exist
+  - name: linking on docker-compose
+    shell: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    args:
+      creates: /usr/bin/docker-compose
+
+# installing apps
+  - name: updating yum cache + installing specified apps
+    yum:
+      name:
+        - yum-utils
+        - git
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      state: present
+      update_cache: yes
+
+# start docker daemon to running container
+  - name: start docker daemon
+    service:
+      name: docker
+      state: started
+
+# project
+  - name: get project
+    ansible.builtin.git:
+     repo: 'https://github.com/dataengi/crm-seed.git'
+     dest: /home/vagrant/crm-seed
+     clone: yes
+     update: yes
+
+  - name: runnig containers
+    shell: docker-compose --file ./docker-compose.yml up -d
+    args:
+      chdir: /home/vagrant/crm-seed/
