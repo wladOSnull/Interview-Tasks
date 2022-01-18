@@ -671,7 +671,7 @@ First steps with Terraform and AWS were done earlier on SoftServe DevOps course,
   - Type Details:
     - Username: centos
     - SSH Private Key: Browse -> select file of private ssh key created in chapter "Setup"
-    - Privilege Escalation Method: sudo su
+    - Privilege Escalation Method: sudo su (write it manually in text box and then select "create sudo su") 
   - *Save*
 
 - tab Projects
@@ -683,7 +683,7 @@ First steps with Terraform and AWS were done earlier on SoftServe DevOps course,
       - Job Type: Run
       - Inventory: select "inventory_aws_single" (with the AMI)
       - Project: select "my_first"
-      - Execution Environment: se;ect "Control Plane Execution Environment"
+      - Execution Environment: select "Control Plane Execution Environment"
       - Playbook: select "devops_engineer_task/Solutions/ansible/playbook.yaml"
       - Credentials: select "Terraform-CentOS"
     - *Save*
@@ -752,7 +752,7 @@ Then the CRM server can be accessed by:
 - open web browser on host
 
 - visit pages of CRM:
-  - [http://ipv4-address-of-the-AMI]  
+  - http://ipv4-address-of-the-AMI  
 
 An example of results:  
 ![image](screenshots/task3.2_final.png?raw=true "CRM on the AMI provisioned by Ansible AWX deployed via Terraform")
