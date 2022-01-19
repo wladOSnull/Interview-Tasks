@@ -286,7 +286,7 @@ This chapter contains 2 parts:
   ```bash
   ~ nano awx-deploy.yml
   
-  # follow content must to be in awx-deploy.yml
+  # follow content must be in awx-deploy.yml
   ---
   apiVersion: awx.ansible.com/v1beta1
   kind: AWX
